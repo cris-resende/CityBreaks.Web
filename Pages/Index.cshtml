@@ -1,10 +1,56 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Bem-vindo ao CityBreaks!</h1>
+    <p>Lista de Cidades e Propriedades Turísticas</p>
+</div>
+
+<div class="container mt-4">
+    <h2>Cidades Cadastradas</h2>
+    @if (Model.Cities == null || !Model.Cities.Any())
+    {
+        <p>Nenhuma cidade encontrada.</p>
+    }
+    else
+    {
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Cidade</th>
+                    <th>País</th>
+                    <th>Propriedades</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var city in Model.Cities)
+                {
+                    <tr>
+                        <td>@city.Name</td>
+                        <td>@city.Country.CountryName (@city.Country.CountryCode)</td>
+                        <td>
+                            @if (city.Properties == null || !city.Properties.Any())
+                            {
+                                <span>Nenhuma propriedade.</span>
+                            }
+                            else
+                            {
+                                <ul>
+                                    @foreach (var property in city.Properties)
+                                    {
+                                        <li>
+                                            @property.Name - R$ @property.PricePerNight por noite
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 </div>
