@@ -1,0 +1,50 @@
+﻿@page "{name?}"
+@model CityBreaks.Web.Pages.CityDetailsModel
+@{
+    ViewData["Title"] = "Detalhes da Cidade";
+}
+
+<div class="container mt-4">
+    @if (Model.City == null)
+    {
+        <div class="alert alert-warning" role="alert">
+            Cidade não encontrada.
+        </div>
+    }
+    else
+    {
+        <h1 class="mb-4">Detalhes da Cidade: @Model.City.Name</h1>
+
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">@Model.City.Name</h5>
+                <h6 class="card-subtitle mb-2 text-muted">País: @Model.City.Country.CountryName (@Model.City.Country.CountryCode)</h6>
+            </div>
+        </div>
+
+        <h3 class="mt-4">Propriedades em @Model.City.Name</h3>
+        @if (Model.City.Properties == null || !Model.City.Properties.Any())
+        {
+            <p>Nenhuma propriedade turística cadastrada para esta cidade.</p>
+        }
+        else
+        {
+            <div class="row">
+                @foreach (var property in Model.City.Properties)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">@property.Name</h5>
+                                <p class="card-text">Preço por noite: R$ @property.PricePerNight por noite</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    }
+    <div class="mt-4">
+        <a asp-page="/Index" class="btn btn-secondary">Voltar para a lista de cidades</a>
+    </div>
+</div>
