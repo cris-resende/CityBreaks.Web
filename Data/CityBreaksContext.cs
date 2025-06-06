@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using CityBreaks.Web.Models;
+using CityBreaks.Web.Data.Configurations;
 
 namespace CityBreaks.Web.Data
 {
@@ -17,6 +18,10 @@ namespace CityBreaks.Web.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfiguration(new CountryConfiguration());
+            modelBuilder.ApplyConfiguration(new CityConfiguration());
+            modelBuilder.ApplyConfiguration(new PropertyConfiguration());
         }
     }
 }

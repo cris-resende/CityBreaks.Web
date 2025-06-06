@@ -10,6 +10,6 @@ namespace CityBreaks.Web.Models
 
         public string CountryName { get; set; }
 
-        public List<Country> Countries { get; set; } = new List<Country>();
+        public List<City> Cities { get; set; } = new List<City>();
     }
 }
