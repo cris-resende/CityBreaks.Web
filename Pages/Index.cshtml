@@ -44,6 +44,11 @@
                                         <li>
                                             @property.Name - R$ @property.PricePerNight por noite
                                             <a asp-page="/EditProperty" asp-route-id="@property.Id" class="btn btn-sm btn-info ms-2">Editar</a>
+
+                                            <form method="post" asp-page-handler="DeleteProperty" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja deletar esta propriedade?');">
+                                                <input type="hidden" name="id" value="@property.Id" />
+                                                <button type="submit" class="btn btn-sm btn-danger ms-1">Deletar</button>
+                                            </form>
                                         </li>
                                     }
                                 </ul>

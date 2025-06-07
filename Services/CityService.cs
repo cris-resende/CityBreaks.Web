@@ -2,6 +2,7 @@
 using CityBreaks.Web.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CityBreaks.Web.Services
@@ -19,7 +20,7 @@ namespace CityBreaks.Web.Services
         {
             return await _context.Cities
                                  .Include(c => c.Country)
-                                 .Include(c => c.Properties)
+                                 .Include(c => c.Properties.Where(p => p.DeletedAt == null))
                                  .ToListAsync();
         }
         public async Task<City?> GetByNameAsync(string name)
@@ -27,7 +28,7 @@ namespace CityBreaks.Web.Services
             return await _context.Cities
                                  .Where(c => EF.Functions.Collate(c.Name, "NOCASE") == EF.Functions.Collate(name, "NOCASE"))
                                  .Include(c => c.Country)
-                                 .Include(c => c.Properties)
+                                 .Include(c => c.Properties.Where(p => p.DeletedAt == null))
                                  .FirstOrDefaultAsync();
         }
     }
