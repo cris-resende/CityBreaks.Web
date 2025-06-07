@@ -1,0 +1,73 @@
+﻿@page
+@model CityBreaks.Web.Pages.FilterPropertiesModel
+@{
+	ViewData["Title"] = "Filtrar Propriedades";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4">Filtrar Propriedades Turísticas</h1>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            Critérios de Filtro
+        </div>
+        <div class="card-body">
+            <form method="get">
+
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="MinPrice"></label>
+                        <input asp-for="MinPrice" class="form-control" type="number" step="0.01" />
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="MaxPrice"></label>
+                        <input asp-for="MaxPrice" class="form-control" type="number" step="0.01" />
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="CityName"></label>
+                        <input asp-for="CityName" class="form-control" />
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="PropertyName"></label>
+                        <input asp-for="PropertyName" class="form-control" />
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Aplicar Filtros</button>
+                <a asp-page="/FilterProperties" class="btn btn-secondary">Limpar Filtros</a>
+            </form>
+        </div>
+    </div>
+
+    <h2 class="mt-4">Resultados da Consulta</h2>
+
+    @if (Model.FilteredProperties == null || !Model.FilteredProperties.Any())
+    {
+        <div class="alert alert-info" role="alert">
+            Nenhuma propriedade encontrada com os filtros aplicados.
+        </div>
+    }
+    else
+    {
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Propriedade</th>
+                    <th>Preço por Noite</th>
+                    <th>Cidade</th>
+                    <th>País</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var property in Model.FilteredProperties)
+                {
+                    <tr>
+                        <td>@property.Name</td>
+                        <td>R$ @property.PricePerNight</td>
+                        <td>@property.City.Name</td>
+                        <td>@property.City.Country.CountryName (@property.City.Country.CountryCode)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
